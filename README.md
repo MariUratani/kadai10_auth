@@ -8,7 +8,7 @@ PHP4 - 管理画面（認証機能等）
 - loginした者の属性（管理者 / ゲスト）に応じて、編集・削除権限を制御します。
 
 ## ③DEMO
-https://rimani.sakura.ne.jp/kadai10_20240420/
+https://rimani.sakura.ne.jp/kadai10_20240420/login.php
 
 ## ④工夫した点・こだわった点
 - インターフェースに統一感を出しました。
