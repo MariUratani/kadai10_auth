@@ -5,38 +5,63 @@ include("funcs.php");
 $pdo = db_conn();
 
 // ログインチェック
-sschk();
+// sschk();
 
 // ソートの条件を受け取る
 $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
 
 //２．データ登録SQL作成
-$sql = "SELECT ROW_NUMBER() OVER (ORDER BY id ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY id ASC"; // デフォルトのソート順（id順）
+$sql = "SELECT id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY id ASC"; // デフォルトのソート順（id順）
+// $sql = "SELECT * FROM my_bm_table ORDER BY id ASC";
 switch ($sort) {
   case 'py_asc':
-    $sql = "SELECT ROW_NUMBER() OVER (ORDER BY py ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY py ASC";
+    $sql = "SELECT id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY py ASC";
     break;
   case 'py_desc':
-    $sql = "SELECT ROW_NUMBER() OVER (ORDER BY py DESC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY py DESC";
+    $sql = "SELECT id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY py DESC";
     break;
   case 'status_asc':
-    $sql = "SELECT ROW_NUMBER() OVER (ORDER BY status ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY status ASC";
+    $sql = "SELECT id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY status ASC";
     break;
   case 'status_desc':
-    $sql = "SELECT ROW_NUMBER() OVER (ORDER BY status DESC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY status DESC";
+    $sql = "SELECT id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY status DESC";
     break;
   case 'action_asc':
-    $sql = "SELECT ROW_NUMBER() OVER (ORDER BY action ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY action ASC";
+    $sql = "SELECT id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY action ASC";
     break;
   case 'action_desc':
-    $sql = "SELECT ROW_NUMBER() OVER (ORDER BY action DESC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY action DESC";
+    $sql = "SELECT id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY action DESC";
     break;
 }
+
+// $sql = "SELECT ROW_NUMBER() OVER (ORDER BY id ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY id ASC"; // デフォルトのソート順（id順）
+// switch ($sort) {
+//   case 'py_asc':
+//     $sql = "SELECT ROW_NUMBER() OVER (ORDER BY py ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY py ASC";
+//     break;
+//   case 'py_desc':
+//     $sql = "SELECT ROW_NUMBER() OVER (ORDER BY py DESC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY py DESC";
+//     break;
+//   case 'status_asc':
+//     $sql = "SELECT ROW_NUMBER() OVER (ORDER BY status ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY status ASC";
+//     break;
+//   case 'status_desc':
+//     $sql = "SELECT ROW_NUMBER() OVER (ORDER BY status DESC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY status DESC";
+//     break;
+//   case 'action_asc':
+//     $sql = "SELECT ROW_NUMBER() OVER (ORDER BY action ASC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY action ASC";
+//     break;
+//   case 'action_desc':
+//     $sql = "SELECT ROW_NUMBER() OVER (ORDER BY action DESC) AS row_num, id, isbn, name, author, py, tekiyou, status, action FROM my_bm_table ORDER BY action DESC";
+//     break;
+// }
+
+// $sql = "SELECT * FROM my_bm_table";
 
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute(); //true or false
 
-//３．データ表示
+// //３．データ表示
 if ($status == false) {
   sql_error($stmt);
 }
